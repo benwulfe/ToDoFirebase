@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="currentItem"
             type="com.example.google.firebase.FirebaseViewModelItem"/>
@@ -19,24 +20,45 @@
             android:layout_height="0dp"
             android:layout_weight="4"
             android:id="@+id/message"
-            android:text="@{currentItem.dataSnapshot.child(`message`).getValue()}"
-            app:onFocusChangeListener="@{currentItem.updateOnLostFocus(`message`)}"
-            tools:text="message"
+            android:text="@{currentItem.dataSnapshot.child(`mytodoitem`).getValue()}"
+            app:onFocusChangeListener="@{currentItem.updateOnLostFocus(`mytodoitem`)}"
             android:background="@android:color/white"
             android:enabled="true"
             android:textStyle="bold"
             android:singleLine="true" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:id="@+id/user"
-            android:text="@{currentItem.dataSnapshot.child(`date`).getValue()}"
-            tools:text="user"
-            android:background="@android:color/white"
-            android:enabled="false"
-            android:textStyle="italic"
-            android:singleLine="true" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#CCC"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                android:id="@+id/user"
+                android:text="@{currentItem.dataSnapshot.child(`date`).getValue()}"
+                tools:text="user"
+                android:background="@android:color/white"
+                android:enabled="false"
+                android:textStyle="italic"
+                android:singleLine="true" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="end"
+                android:onClickListener="@{currentItem.deleteItem}"
+                android:visibility="@{currentItem.itemExists ? View.VISIBLE : View.GONE}"
+                android:text="Delete" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="end"
+                android:onClickListener="@{currentItem.saveItem}"
+                android:visibility="@{currentItem.itemExists ? View.GONE : View.VISIBLE}"
+                android:text="Add" />
+        </LinearLayout>
+
     </LinearLayout>
 </layout>

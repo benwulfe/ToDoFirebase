@@ -158,15 +158,23 @@ public class FirebaseViewAdapter extends RecyclerView.Adapter<FirebaseViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolderImpl viewHolder, int i) {
-        String key = childKeys.get(i);
+        Object item;
+        if (i < childKeys.size()) {
+            String key = childKeys.get(i);
+            item = childItems.get(key);
+        }
+        else {
+            item = new FirebaseViewModelItem();
+            ((FirebaseViewModelItem)item).setFirebase(firebaseQuery.getRef());
+        }
 
-        viewHolder.binding.setVariable(BR.currentItem, childItems.get(key));
+        viewHolder.binding.setVariable(BR.currentItem, item);
         viewHolder.binding.executePendingBindings();
     }
 
     @Override
     public int getItemCount() {
-        return childKeys.size();
+        return childKeys.size() + 1;
     }
 
     public static class ViewHolderImpl extends RecyclerView.ViewHolder {

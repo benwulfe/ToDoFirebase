@@ -9,6 +9,9 @@ import com.example.google.todofirebase.BR;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 
+import java.util.Date;
+import java.util.HashMap;
+
 /**
  * Represents a ViewModel for a single Firebase child in a list.
  * You may subclass this Type to provide additional functionality.
@@ -21,6 +24,7 @@ import com.firebase.client.Firebase;
 public class FirebaseViewModelItem extends BaseObservable {
     Firebase firebase;
     DataSnapshot dataSnapshot;
+    HashMap<String, Object> newItemValues = new HashMap<>();
 
     public FirebaseViewModelItem() {
     }
@@ -28,6 +32,10 @@ public class FirebaseViewModelItem extends BaseObservable {
     @Bindable
     public Firebase getFirebase() {
         return firebase;
+    }
+
+    public void setFirebase(Firebase firebaseRef) {
+        firebase = firebaseRef;
     }
 
     public View.OnFocusChangeListener updateOnLostFocus(final String fieldName) {
@@ -57,9 +65,41 @@ public class FirebaseViewModelItem extends BaseObservable {
     }
 
     protected void onFieldChanged(String fieldName, String newValue) {
-        if (firebase != null) {
+        if (getItemExists()) {
             firebase.child(fieldName).setValue(newValue);
         }
+        else {
+            newItemValues.put(fieldName, newValue);
+        }
+    }
+
+    public View.OnClickListener deleteItem() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (firebase != null) {
+                    firebase.removeValue();
+                }
+            }
+        };
+    }
+
+    public View.OnClickListener saveItem() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (firebase != null && !getItemExists()) {
+                    v.getRootView().clearFocus();
+                    newItemValues.put("date", new Date().toString());
+                    firebase.push().setValue(newItemValues);
+                }
+            }
+        };
+    }
+
+    @Bindable
+    public boolean getItemExists() {
+        return dataSnapshot != null;
     }
 
     @Bindable

@@ -14,16 +14,13 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    Firebase firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(this);
 
-        firebase = new Firebase("https://incandescent-torch-2575.firebaseio.com/messages");
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.setFirebaseQuery(firebase);
         binding.activityUsersRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -34,16 +31,4 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_add) {
-            HashMap<String, Object> newItem = new HashMap<>();
-            newItem.put("date", new Date().toString());
-            newItem.put("message", "<new item>");
-            firebase.push().setValue(newItem);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
