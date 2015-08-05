@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ToDoFirebase.iml" filepath="$PROJECT_DIR$/ToDoFirebase.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nagger/nagger.iml" filepath="$PROJECT_DIR$/nagger/nagger.iml" />
     </modules>
   </component>
 </project>

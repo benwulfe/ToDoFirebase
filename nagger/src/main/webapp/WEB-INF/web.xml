@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+    <servlet>
+        <servlet-name>MyServlet</servlet-name>
+        <servlet-class>com.example.benwu.myapplication.nagger.MyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NagEmailer</servlet-name>
+        <servlet-class>com.example.benwu.myapplication.nagger.NagEmailer</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyServlet</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NagEmailer</servlet-name>
+        <url-pattern>/newToDos</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+</web-app>
